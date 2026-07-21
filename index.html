@@ -53,8 +53,11 @@
   <meta property="og:title" content="La Frite'Rit · Friterie à Villers-Bretonneux" />
   <meta property="og:description" content="Frites maison, burgers et spécialités du Nord à emporter. 33 route de Péronne, 80800 Villers-Bretonneux." />
 
-  <!-- Couleur de la barre navigateur mobile — à renseigner avec le rouge du logo -->
-  <!-- <meta name="theme-color" content="#______" /> [À REMPLACER par --color-primary] -->
+  <!-- Couleur de la barre navigateur mobile (= rouge du logo) -->
+  <meta name="theme-color" content="#C83B2C" />
+
+  <!-- Favicon : version compacte du logo, embarquée (aucun fichier externe) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='10.6' y='4' width='3.4' height='12.5' rx='1.7' fill='%23E7AE38'/><rect x='14.6' y='2.4' width='3.4' height='14' rx='1.7' fill='%23F0C34E'/><rect x='18.6' y='4' width='3.4' height='12.5' rx='1.7' fill='%23D69A2A'/><path d='M6 15h20l-2.3 12.6a2 2 0 0 1-2 1.7H10.3a2 2 0 0 1-2-1.7Z' fill='%23C83B2C' stroke='%231b1512' stroke-width='1.6' stroke-linejoin='round'/><path d='M12 20q4 3.4 8 0' fill='none' stroke='%231b1512' stroke-width='1.7' stroke-linecap='round'/></svg>" />
 
   <!-- ========================= POLICES ========================= -->
   <!-- Google Fonts : Fraunces (titres, du caractère) + Manrope (texte, très lisible) -->
@@ -70,8 +73,8 @@
   :root{
 
     /* ▼▼▼ LES DEUX SEULES COULEURS À RENSEIGNER (récupérées sur le logo) ▼▼▼ */
-    --color-primary:  ; /* rouge  */
-    --color-accent:   ; /* doré   */
+    --color-primary: #C83B2C; /* rouge  — le carton du logo */
+    --color-accent:  #E7AE38; /* doré   — les frites du logo */
     /* ▲▲▲ ne rien écrire en dur au-delà de ces deux lignes ▲▲▲ */
 
 
@@ -208,10 +211,22 @@
   @media (min-width:768px){ .hero-inner{ padding-block:var(--s6) var(--s7); } }
 
   .brand{ display:flex; align-items:center; gap:var(--s1); margin-bottom:var(--s4); }
-  .logo-mark{ width:48px; height:48px; flex:none; }
-  .logo-mark .box{ fill:var(--color-primary); }
-  .logo-mark .band{ fill:color-mix(in srgb, white 82%, var(--color-primary)); }
-  .logo-mark .fry{ stroke:var(--color-accent); }
+
+  /* --- Logo « frites qui rient » : recréation vectorielle du logo, teintée par les 2 variables --- */
+  .logo-mark{ width:46px; height:54px; flex:none; overflow:visible; }
+  .lg-ink{ stroke:var(--ink); stroke-linejoin:round; stroke-linecap:round; } /* trait sombre commun */
+  .lg-box{ fill:var(--color-primary); stroke:var(--ink); stroke-width:3.2; stroke-linejoin:round; }
+  .lg-fry{ stroke:var(--ink); stroke-width:2.6; stroke-linejoin:round; }
+  .lg-fry-l{ fill:color-mix(in srgb, var(--color-accent) 72%, white); }   /* frite claire  */
+  .lg-fry-b{ fill:var(--color-accent); }                                  /* frite dorée   */
+  .lg-fry-d{ fill:color-mix(in srgb, var(--color-accent) 84%, black); }   /* frite ambrée  */
+  .lg-face{ fill:none; stroke:var(--ink); stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; }
+  .lg-mouth{ fill:var(--ink); }
+  .lg-tooth{ fill:color-mix(in srgb, white 92%, var(--color-accent)); }
+  .lg-teeth-line{ stroke:var(--ink); stroke-width:1.5; stroke-linecap:round; }
+  /* Éclaboussures de peinture (couleurs propres au logo, hors thème) */
+  .lg-sp-green{ fill:#3DB35B; } .lg-sp-cyan{ fill:#37C1D2; }
+  .lg-sp-mag{ fill:#D23F9E; }   .lg-sp-yel{ fill:#F0C63E; }
   .brand-name{ font-family:var(--font-title); font-weight:700; font-size:1.35rem; letter-spacing:-.02em; }
   .brand-name b{ color:var(--color-primary); font-weight:700; }
 
@@ -544,22 +559,57 @@
   <a class="skip" href="#carte">Aller à la carte</a>
 
   <!-- ============================================================
+       LOGO « LA FRITE'RIT » — recréation vectorielle du logo (frites qui rient)
+       Défini une seule fois ici, réutilisé via <use href="#frite-logo">.
+       Le carton prend --color-primary, les frites --color-accent : le logo
+       se re-teinte donc en même temps que le reste du site.
+       > Pour utiliser le VRAI fichier logo à la place : remplacez chaque
+         <svg class="logo-mark">…</svg> par <img src="logo.png" alt="La Frite'Rit"
+         class="logo-mark" style="height:54px;width:auto">.
+       ============================================================ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="frite-logo" viewBox="0 0 96 116">
+      <!-- éclaboussures de peinture (personnalité du logo) -->
+      <circle class="lg-sp-green" cx="9"  cy="50" r="4.5"/>
+      <circle class="lg-sp-green" cx="15" cy="60" r="2.4"/>
+      <circle class="lg-sp-cyan"  cx="88" cy="78" r="4.8"/>
+      <circle class="lg-sp-cyan"  cx="82" cy="90" r="2.6"/>
+      <circle class="lg-sp-yel"   cx="86" cy="30" r="3.2"/>
+      <circle class="lg-sp-mag"   cx="26" cy="106" r="3"/>
+      <circle class="lg-sp-mag"   cx="70" cy="108" r="2.4"/>
+      <!-- frites -->
+      <g>
+        <rect class="lg-fry lg-fry-l" x="20" y="14" width="11" height="46" rx="4.5" transform="rotate(-15 25.5 58)"/>
+        <rect class="lg-fry lg-fry-b" x="34" y="6"  width="11" height="54" rx="4.5" transform="rotate(-5 39.5 58)"/>
+        <rect class="lg-fry lg-fry-d" x="46" y="3"  width="11" height="57" rx="4.5" transform="rotate(3 51.5 58)"/>
+        <rect class="lg-fry lg-fry-b" x="56" y="8"  width="11" height="52" rx="4.5" transform="rotate(12 61.5 58)"/>
+        <rect class="lg-fry lg-fry-l" x="66" y="16" width="11" height="44" rx="4.5" transform="rotate(20 71.5 58)"/>
+      </g>
+      <!-- carton (haut plié, forme trapèze) -->
+      <path class="lg-box" d="M13 55 L22 46 L31 55 L40 45 L49 55 L58 45 L67 55 L76 46 L83 55 L74 104 Q73 108 68 108 L28 108 Q23 108 22 104 Z"/>
+      <!-- visage : yeux rieurs -->
+      <path class="lg-face" d="M33 71 Q39 65 45 71"/>
+      <path class="lg-face" d="M52 71 Q58 65 64 71"/>
+      <!-- bouche ouverte + dents -->
+      <path class="lg-mouth" d="M33 80 Q48 76 64 80 Q60 100 48 100 Q36 100 33 80 Z"/>
+      <path class="lg-tooth" d="M36 81.5 Q48 78.5 61 81.5 L60 88 Q48 85.5 37 88 Z"/>
+      <g class="lg-teeth-line">
+        <line x1="43" y1="80" x2="43" y2="87"/>
+        <line x1="49" y1="79.4" x2="49" y2="87"/>
+        <line x1="55" y1="80" x2="55" y2="87"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <!-- ============================================================
        EN-TÊTE / HERO
        ============================================================ -->
   <header class="hero">
     <div class="wrap hero-inner">
 
       <div class="brand">
-        <!-- Logo : cornet de frites minimaliste (couleurs = variables) -->
-        <svg class="logo-mark" viewBox="0 0 48 48" role="img" aria-label="Logo La Frite'Rit">
-          <g class="fry" stroke-width="3.2" stroke-linecap="round" fill="none">
-            <line x1="18" y1="9" x2="17" y2="22"/>
-            <line x1="24" y1="6.5" x2="24" y2="22"/>
-            <line x1="30" y1="9" x2="31" y2="22"/>
-          </g>
-          <path class="box" d="M12.5 20 H35.5 L32.4 40.2 A2.4 2.4 0 0 1 30 42.3 H18 A2.4 2.4 0 0 1 15.6 40.2 Z"/>
-          <path class="band" d="M14.3 25 H33.7 L33 29.4 H15 Z"/>
-        </svg>
+        <!-- Logo (recréation vectorielle) — voir <symbol id="frite-logo"> plus haut -->
+        <svg class="logo-mark" viewBox="0 0 96 116" role="img" aria-label="Logo La Frite'Rit"><use href="#frite-logo"/></svg>
         <span class="brand-name">La <b>Frite'Rit</b></span>
       </div>
 
@@ -894,11 +944,7 @@
       <div class="foot-grid">
         <div>
           <div class="brand" style="margin-bottom:var(--s1)">
-            <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
-              <g class="fry" stroke-width="3.2" stroke-linecap="round" fill="none"><line x1="18" y1="9" x2="17" y2="22"/><line x1="24" y1="6.5" x2="24" y2="22"/><line x1="30" y1="9" x2="31" y2="22"/></g>
-              <path class="box" d="M12.5 20 H35.5 L32.4 40.2 A2.4 2.4 0 0 1 30 42.3 H18 A2.4 2.4 0 0 1 15.6 40.2 Z"/>
-              <path class="band" d="M14.3 25 H33.7 L33 29.4 H15 Z"/>
-            </svg>
+            <svg class="logo-mark" viewBox="0 0 96 116" aria-hidden="true"><use href="#frite-logo"/></svg>
             <span class="brand-name">La Frite'Rit</span>
           </div>
           <p style="font-size:.92rem;max-width:34ch">La friterie de Villers‑Bretonneux. Frites maison, burgers et spécialités du Nord, à emporter midi et soir.</p>
